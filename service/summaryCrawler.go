@@ -22,9 +22,16 @@ func SummaryCrawl(petitionID string) model.PetitionContent {
 	lib.CheckErr(err)
 	question := doc.Find(".View_write").Text()
 	answer := doc.Find(".pr_tk25").Text()
-	result = model.PetitionContent{
-		Question: lib.CleanStr(question),
-		Answer:   lib.CleanStr(answer)[13:],
+	if answer == "" {
+		result = model.PetitionContent{
+			Question: lib.CleanStr(question),
+			Answer:   "no content",
+		}
+	} else {
+		result = model.PetitionContent{
+			Question: lib.CleanStr(question),
+			Answer:   lib.CleanStr(answer)[13:],
+		}
 	}
 	return result
 }
